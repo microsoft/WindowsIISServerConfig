@@ -1,6 +1,7 @@
 version: 1.0.{build}.0
 clone_folder: c:\projects\$(APPVEYOR_PROJECT_NAME)
 environment:
+  TestResultsUploadURI: "https://ci.appveyor.com/api/testresults/nunit/$($env:APPVEYOR_JOB_ID)"
   ApplicationID:
     secure: IJBqnB6WjtDi3ej/zy2D70Ry1AvJOrlZK5BhSoqEdxNENd0CL9qdMJndbi6p+di3
   ApplicationPassword:
