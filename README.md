@@ -1,5 +1,7 @@
 # Windows IIS Server Configuration
 
+[![Build status](https://ci.appveyor.com/api/projects/status/y3u9qoie6854tpe3/branch/master?svg=true)](https://ci.appveyor.com/project/mgreenegit/windowsiisserverconfig/branch/master)
+
 This DSC Configuration script is in PREVIEW
 as a minimal viable product.
 The work remaining for this script includes:
