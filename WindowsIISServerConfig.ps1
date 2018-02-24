@@ -50,7 +50,7 @@ Import-DscResource -ModuleName 'PSDesiredStateConfiguration'
     WindowsFeature WebServer
     {
         Ensure  = 'Present'
-        Name    = 'WebServer'
+        Name    = 'Web-Server'
     }
 
     xWebSiteDefaults SiteDefaults
