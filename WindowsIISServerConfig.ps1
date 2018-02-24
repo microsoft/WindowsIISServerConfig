@@ -45,8 +45,9 @@ configuration WindowsIISServerConfig
 {
 
 Import-DscResource -ModuleName @{ModuleName = 'xWebAdministration';ModuleVersion = '1.19.0.0'}
+Import-DscResource -ModuleName 'PSDesiredStateConfiguration'
 
-WindowsFeature WebServer
+    WindowsFeature WebServer
     {
         Ensure  = 'Present'
         Name    = 'WebServer'
@@ -60,5 +61,14 @@ WindowsFeature WebServer
         TraceLogDirectory       = 'C:\inetpub\logs\FailedReqLogFiles'
         DefaultApplicationPool  = 'DefaultAppPool'
         AllowSubDirConfig       = 'true'
+        DependsOn               = '[WindowsFeature]WebServer'
+    }
+
+    xWebAppPoolDefaults PoolDefaults
+    {
+       ApplyTo               = 'Machine'
+       ManagedRuntimeVersion = 'v4.0'
+       IdentityType          = 'ApplicationPoolIdentity'
+       DependsOn             = '[WindowsFeature]WebServer'
     }
 }
