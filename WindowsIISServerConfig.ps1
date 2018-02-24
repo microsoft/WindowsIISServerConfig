@@ -41,7 +41,7 @@ https://github.com/Microsoft/WindowsIISServerConfig/blob/master/README.md#releas
 
 #> 
 
-configuration BasicIISServer
+configuration WindowsIISServerConfig
 {
 
 Import-DscResource -ModuleName @{ModuleName = 'xWebAdministration';ModuleVersion = '1.19.0.0'}
