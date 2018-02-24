@@ -43,9 +43,22 @@ https://github.com/Microsoft/WindowsIISServerConfig/blob/master/README.md#releas
 
 configuration BasicIISServer
 {
-    WindowsFeature WebServer
+
+Import-DscResource -ModuleName @{ModuleName = 'xWebAdministration';ModuleVersion = '1.19.0.0'}
+
+WindowsFeature WebServer
     {
         Ensure  = 'Present'
         Name    = 'WebServer'
+    }
+
+    xWebSiteDefaults SiteDefaults
+    {
+        ApplyTo                 = 'Machine'
+        LogFormat               = 'IIS'
+        LogDirectory            = 'C:\inetpub\logs\LogFiles'
+        TraceLogDirectory       = 'C:\inetpub\logs\FailedReqLogFiles'
+        DefaultApplicationPool  = 'DefaultAppPool'
+        AllowSubDirConfig       = 'true'
     }
 }
