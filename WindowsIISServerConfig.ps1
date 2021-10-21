@@ -1,7 +1,7 @@
 
 <#PSScriptInfo
 
-.VERSION 0.2.0
+.VERSION 0.3.0
 
 .GUID a38fa39f-f93d-4cf4-9e08-fa8f880e6187
 
@@ -32,7 +32,7 @@ https://github.com/Microsoft/WindowsIISServerConfig/blob/master/README.md#releas
 
 #>
 
-#Requires -Module @{modulename = 'xWebAdministration'; moduleversion = '2.4.0.0'}
+#Requires -Module @{modulename = 'xWebAdministration'; moduleversion = '3.2.0'}
 
 <# 
 
@@ -44,7 +44,7 @@ https://github.com/Microsoft/WindowsIISServerConfig/blob/master/README.md#releas
 configuration WindowsIISServerConfig
 {
 
-Import-DscResource -ModuleName @{ModuleName = 'xWebAdministration';ModuleVersion = '2.4.0.0'}
+Import-DscResource -ModuleName @{ModuleName = 'xWebAdministration';ModuleVersion = '3.2.0'}
 Import-DscResource -ModuleName 'PSDesiredStateConfiguration'
 
     WindowsFeature WebServer
