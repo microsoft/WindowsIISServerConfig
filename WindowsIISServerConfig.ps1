@@ -75,7 +75,7 @@ Import-DscResource -ModuleName @{ModuleName = 'PSDscResources';ModuleVersion = '
     File WebContent
     {
         Ensure          = "Present"
-        DestinationPath = 'c:\webContent'
+        DestinationPath = 'c:\webContent\default.htm'
         Contents        = @'
 <html>
   <body>
