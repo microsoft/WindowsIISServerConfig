@@ -1,7 +1,7 @@
 
 <#PSScriptInfo
 
-.VERSION 0.3.0
+.VERSION 0.4.0
 
 .GUID a38fa39f-f93d-4cf4-9e08-fa8f880e6187
 
@@ -53,7 +53,6 @@ Import-DscResource -ModuleName @{ModuleName = 'PSDscResources';ModuleVersion = '
         Name    = 'Web-Server'
     }
 
-    # IIS Site Default Values
     xWebSiteDefaults SiteDefaults
     {
         LogFormat               = 'IIS'
@@ -62,52 +61,46 @@ Import-DscResource -ModuleName @{ModuleName = 'PSDscResources';ModuleVersion = '
         DefaultApplicationPool  = 'DefaultAppPool'
         AllowSubDirConfig       = 'true'
         DependsOn               = '[WindowsFeature]WebServer'
-        IsSingleInstance        = 'true'
+        IsSingleInstance        = 'Yes'
     }
 
-    # IIS App Pool Default Values
     xWebAppPoolDefaults PoolDefaults
     {
        ManagedRuntimeVersion = 'v4.0'
        IdentityType          = 'ApplicationPoolIdentity'
        DependsOn             = '[WindowsFeature]WebServer'
-       IsSingleInstance        = 'true'
+       IsSingleInstance      = 'Yes'
     }
 
-    <#
-    If you would like DSC to deploy your content in to a new site,
-    this section provides an example, as well as use of a certificate.
-
-    See more examples in the xWebAdministration resource project.
-    https://github.com/PowerShell/xWebAdministration/tree/dev/Examples
-
-     File WebContent
+    File WebContent
     {
         Ensure          = "Present"
-        SourcePath      = $SourcePath
-        DestinationPath = $DestinationPath
-        Recurse         = $true
-        Type            = "Directory"
-        DependsOn       = "[WindowsFeature]AspNet45"
+        DestinationPath = 'c:\webContent'
+        Contents        = @'
+<html>
+  <body>
+    <p>This is a test page.</p>
+  </body>
+</html>
+'@
+        DependsOn       = '[xWebSiteDefaults]SiteDefaults'
     }
 
     xWebsite NewWebsite
     {
-        Ensure          = "Present"
-        Name            = $WebSiteName
-        State           = "Started"
-        PhysicalPath    = $DestinationPath
-        DependsOn       = "[File]WebContent"
+        Ensure          = 'Present'
+        Name            = 'testSite'
+        State           = 'Started'
+        PhysicalPath    = 'c:\webContent'
+        DependsOn       = '[File]WebContent'
         BindingInfo     = MSFT_xWebBindingInformation
         {
-            Protocol              = 'https'
-            Port                  = '443'
-            CertificateStoreName  = 'MY'
-            CertificateThumbprint = 'BB84DE3EC423DDDE90C08AB3C5A828692089493C'
-            HostName              = $Website
-            IPAddress             = '*'
-            SSLFlags              = '1'
+            Protocol               = 'http'
+            Port                   = '80'
+            #CertificateStoreName  = 'MY'
+            #CertificateThumbprint = 'BB84DE3EC423DDDE90C08AB3C5A828692089493C'
+            IPAddress              = '*'
+            #SSLFlags              = '1'
         }
     }
-    #>
 }
