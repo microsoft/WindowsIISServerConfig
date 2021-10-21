@@ -32,7 +32,7 @@ https://github.com/Microsoft/WindowsIISServerConfig/blob/master/README.md#releas
 
 #>
 
-#Requires -Module @{modulename = 'xWebAdministration'; moduleversion = '3.2.0'}
+#Requires -Module @{modulename = 'xWebAdministration'; moduleversion = '3.2.0'},@{ModuleName = 'PSDscResources';ModuleVersion = '2.12.0.0'}
 
 <# 
 
@@ -45,7 +45,7 @@ configuration WindowsIISServerConfig
 {
 
 Import-DscResource -ModuleName @{ModuleName = 'xWebAdministration';ModuleVersion = '3.2.0'}
-Import-DscResource -ModuleName 'PSDesiredStateConfiguration'
+Import-DscResource -ModuleName @{ModuleName = 'PSDscResources';ModuleVersion = '2.12.0.0'}
 
     WindowsFeature WebServer
     {
@@ -56,22 +56,22 @@ Import-DscResource -ModuleName 'PSDesiredStateConfiguration'
     # IIS Site Default Values
     xWebSiteDefaults SiteDefaults
     {
-        ApplyTo                 = 'Machine'
         LogFormat               = 'IIS'
         LogDirectory            = 'C:\inetpub\logs\LogFiles'
         TraceLogDirectory       = 'C:\inetpub\logs\FailedReqLogFiles'
         DefaultApplicationPool  = 'DefaultAppPool'
         AllowSubDirConfig       = 'true'
         DependsOn               = '[WindowsFeature]WebServer'
+        IsSingleInstance        = 'true'
     }
 
     # IIS App Pool Default Values
     xWebAppPoolDefaults PoolDefaults
     {
-       ApplyTo               = 'Machine'
        ManagedRuntimeVersion = 'v4.0'
        IdentityType          = 'ApplicationPoolIdentity'
        DependsOn             = '[WindowsFeature]WebServer'
+       IsSingleInstance        = 'true'
     }
 
     <#
