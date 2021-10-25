@@ -75,7 +75,7 @@ Import-DscResource -ModuleName @{ModuleName = 'PSDscResources';ModuleVersion = '
     File WebContent
     {
         Ensure          = "Present"
-        DestinationPath = 'c:\webContent\default.htm'
+        DestinationPath = 'C:\inetpub\wwwroot\default.htm'
         Contents        = @'
 <html>
   <body>
@@ -91,7 +91,8 @@ Import-DscResource -ModuleName @{ModuleName = 'PSDscResources';ModuleVersion = '
         Ensure          = 'Present'
         Name            = 'testSite'
         State           = 'Started'
-        PhysicalPath    = 'c:\webContent'
+        PhysicalPath    = 'C:\inetpub\wwwroot\'
+        DefaultPage     = 'default.htm'
         DependsOn       = '[File]WebContent'
         BindingInfo     = MSFT_xWebBindingInformation
         {
